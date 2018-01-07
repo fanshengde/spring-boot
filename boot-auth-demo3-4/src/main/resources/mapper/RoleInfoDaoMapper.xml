@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.fsd.dao.RoleInfoDao">
+    <resultMap id="roleMap" type="com.fsd.bean.RoleInfo">
+		<id property="mId" column="m_id"/>
+		<result property="mName" column="m_name"/>
+		<result property="roleLevel" column="role_level"/>
+		<result property="description" column="description"/>
+
+    </resultMap>
+    
+    <sql id="queryCondition">
+        <where>
+			<if test="mId != null and mId != ''">
+				and m_id = #{mId}
+			</if>
+			<if test="mName != null and mName != ''">
+				and mName = #{m_name}
+			</if>
+			<if test="roleLevel != null and roleLevel != ''">
+				and role_level = #{roleLevel}
+			</if>
+			<if test="description != null and description != ''">
+				and description = #{description}
+			</if>
+
+        </where>
+    </sql>
+    	
+    <select id="getByMap" parameterType="map" resultMap="roleMap">
+    	SELECT * FROM role_info
+		<include refid="queryCondition" />
+    </select>
+    
+    <select id="getById" parameterType="int" resultMap="roleMap">
+    	SELECT * FROM role_info WHERE m_id =#{mId}
+    </select>
+    
+    <insert id="create" parameterType="com.fsd.bean.RoleInfo">
+        <selectKey resultType="int"  order="AFTER" keyProperty="mId" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO role_info(
+			m_id,
+			name,
+			role_level,
+			description
+		)VALUES(
+			#{mId},
+			#{name},
+			#{roleLevel},
+			#{description}
+		)
+    </insert>
+    
+    <update id="update" parameterType="com.fsd.bean.RoleInfo">
+		UPDATE role_info SET
+			name = #{name},
+			role_level = #{roleLevel},
+			description = #{description}
+		WHERE m_id = #{mId}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+    	DELETE FROM role_info WHERE m_id = #{mId}
+    </delete>
+    
+</mapper>

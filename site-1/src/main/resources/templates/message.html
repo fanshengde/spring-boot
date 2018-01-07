@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"></link>
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 class="text-center">form process demo post</h1>
+	<div class="container">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Message</td>
+				</tr>
+			</thead>
+			
+			<tbody th:each="HelloMessage:${helloMessage}">
+				<tr>
+					<td th:text="${HelloMessage.name}"></td>
+					<td th:text="${HelloMessage.message}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

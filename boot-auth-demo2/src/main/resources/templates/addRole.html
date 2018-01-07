@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_hader" th:content="${_csrf.headerName}"/>
+    <title>Spring Security Example </title>
+
+</head>
+
+<body>
+<form th:action="@{/login}" method="post">
+
+    <div><label> login Name : <input type="text" name="email"/> </label></div>
+    <div><label> user name: <input type="text" name="name"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><label> dob: <input type="date" name="dob"/> </label></div>
+
+    <div><input type="submit" value="Sign In"/></div>
+
+</form>
+
+</body>
+
+</html>

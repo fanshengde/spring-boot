@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.fsd.dao.UserInfoDao">
+    <resultMap id="userMap" type="com.fsd.bean.UserInfo">
+		<id property="mId" column="m_id"/>
+		<result property="mName" column="m_name"/>
+		<result property="userName" column="user_name"/>
+		<result property="password" column="password"/>
+		<result property="email" column="email"/>
+		<result property="telephone" column="telephone"/>
+		<result property="mobilePhone" column="mobile_phone"/>
+		<result property="wechatId" column="wechat_id"/>
+		<result property="skill" column="skill"/>
+		<result property="departmentId" column="department_id"/>
+		<result property="loginCount" column="login_count"/>
+		<collection property="roles" ofType="com.fsd.bean.RoleInfo">
+			<result column="name" property="name"/>
+		</collection>
+    </resultMap>
+    
+    <sql id="queryCondition">
+        <where>
+			<if test="mId != null and mId != ''">
+				and m_id = #{mId}
+			</if>
+			<if test="mName != null and mName != ''">
+				and m_name = #{mName}
+			</if>
+			<if test="username != null and username != ''">
+				and user_name = #{username}
+			</if>
+			<if test="password != null and password != ''">
+				and password = #{password}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+			<if test="telephone != null and telephone != ''">
+				and telephone = #{telephone}
+			</if>
+			<if test="mobilePhone != null and mobilePhone != ''">
+				and mobile_phone = #{mobilePhone}
+			</if>
+			<if test="wechatId != null and wechatId != ''">
+				and wechat_id = #{wechatId}
+			</if>
+			<if test="skill != null and skill != ''">
+				and skill = #{skill}
+			</if>
+			<if test="departmentId != null and departmentId != ''">
+				and department_id = #{departmentId}
+			</if>
+			<if test="loginCount != null and loginCount != ''">
+				and login_count = #{loginCount}
+			</if>
+			<if test="keywords != null and keywords != ''">
+				and (
+					m_name like CONCAT('%', #{keywords},'%')
+					OR user_name like CONCAT('%', #{keywords},'%')
+					OR telephone like CONCAT('%', #{keywords},'%')
+					OR mobile_phone like CONCAT('%', #{keywords},'%')
+					OR email like CONCAT('%', #{keywords},'%')
+					OR skill like CONCAT('%', #{keywords},'%')
+					OR wechat_id like CONCAT('%', #{keywords},'%')
+				)
+			</if>
+        </where>
+    </sql>
+    	
+    <select id="getByMap" parameterType="map" resultMap="userMap">
+    	SELECT * FROM user_info
+		<include refid="queryCondition" />
+    </select>
+    
+    <select id="getById" parameterType="int" resultMap="userMap">
+    	SELECT * FROM user_info WHERE m_id =#{mId}
+    </select>
+
+	<select id="getByUserName" parameterType="String" resultMap="userMap">
+		select u.*, r.name
+		from user_info u
+		LEFT JOIN user_role ur on u.m_id= ur.user_id
+		LEFT JOIN role r on ur.role_id=r.m_id
+		where user_name= #{userName}
+	</select>
+
+	<insert id="create" parameterType="com.fsd.bean.UserInfo">
+        <selectKey resultType="int"  order="AFTER" keyProperty="mId" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO user_info(
+			m_id,
+			m_name,
+			user_name,
+			password,
+			email,
+			telephone,
+			mobile_phone,
+			wechat_id,
+			skill,
+			department_id,
+			login_count
+		)VALUES(
+			#{mId},
+			#{mName},
+			#{userName},
+			#{password},
+			#{email},
+			#{telephone},
+			#{mobilePhone},
+			#{wechatId},
+			#{skill},
+			#{departmentId},
+			#{loginCount}
+		)
+    </insert>
+    
+    <update id="update" parameterType="com.fsd.bean.UserInfo">
+		UPDATE user_info SET
+			m_name = #{mName},
+			user_name = #{userName},
+			password = #{password},
+			email = #{email},
+			telephone = #{telephone},
+			mobile_phone = #{mobilePhone},
+			wechat_id = #{wechatId},
+			skill = #{skill},
+			department_id = #{departmentId},
+			login_count = #{loginCount}
+		WHERE m_id = #{mId}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+    	DELETE FROM user_info WHERE m_id = #{mId}
+    </delete>
+    
+</mapper>
