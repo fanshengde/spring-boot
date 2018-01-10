@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsd.dao.PermissionInfoDao">
+	<resultMap id="permissionMap" type="com.fsd.bean.PermissionInfo">
+		<id property="sid" column="sid"></id>
+		<result property = "sname" column="sname"></result>
+		<result property="permissionUrl" column="permission_url"></result>
+	</resultMap>
+	
+	<sql id="queryCondition">
+		<where>
+			<if test = "sid != null and sid != ''">
+				and sid = #{sid}
+			</if>
+			<if test="sname != null and sname != ''">
+				and sname = #{sname}
+			</if>
+			<if test="permissionUrl != null and permissionUrl != ''">
+				and permission_url = #{permissionUrl}
+			</if>
+			<if test="method != null and method != ''">
+				and method = #{method}
+			</if>
+			<if test="description != null and description != ''">
+				and description = #{description}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getByMap" parameterType="map" resultMap="permissionMap">
+		SELECT * FROM permission_info
+		<include refid="queryCondition"></include>
+	</select>
+	
+	<select id="getById" parameterType="int" resultMap="permissionMap">
+		SELECT * FROM permission_info WHERE sid = #{sid}
+	</select>
+	
+	<select id="getList" resultMap="permissionMap">
+		SELECT * FROM permission_info
+	</select>
+	<select id="getByUserId" parameterType="int" resultMap="permissionMap">
+			select p.*
+			from user_info u
+			LEFT JOIN user_role_info ur on u.sid = ur.user_id;
+			LEFT JOIN role_info r on ur.role_id = r.sid
+			LEFT JOIN role_permission_info rp on rp.role_id = r.sid
+			LEFT JOIN permission_info p on p.sid = rp.permission_id
+			where u.sid = ${userId}
+	</select>
+	
+	<insert id="create" parameterType = "com.fsd.bean.PermissionInfo">
+		<selectKey resultType="int" order="AFTER" keyProperty="sid">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO permission_info(
+			sid,
+			sname,
+			permission_url,
+			method,
+			description
+		)VALUES(
+			#{sid},
+			#{sname},
+			#{permission_url},
+			#{method},
+			#{description}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.fsd.bean.PermissionInfo)">
+		UPDATE permission_info SET
+			sname = #{sname},
+			permission_url = #{permissionUrl},
+			method = #{method},
+			description = #{description}
+			WHERE sid = #{sid}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM permission_info WHERE sid = #{sid}
+	</delete>
+</mapper>

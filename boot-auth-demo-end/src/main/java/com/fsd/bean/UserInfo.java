@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserInfo implements UserDetails {
 	private Integer sid;
-	private String loginName;
+	private String cnname;
 	private String username;
 	@JsonIgnore
 	private String password;
@@ -76,12 +76,12 @@ public class UserInfo implements UserDetails {
 		this.sid = sid;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getCnName() {
+		return cnname;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setCnName(String cnname) {
+		this.cnname = cnname;
 	}
 
 	public String getRePassword() {
@@ -153,7 +153,7 @@ public class UserInfo implements UserDetails {
 	}
 
 	public String toString() {
-		return "User{" + "sid=" + sid + ", loginName=" + loginName + ", userName=" + username + ", password=" + password
+		return "User{" + "sid=" + sid + ", cnName=" + cnname + ", userName=" + username + ", password=" + password
 				+ ", email=" + email + ", telephone=" + telephone + ", mobilePhone=" + mobilePhone + '}';
 	}
 }

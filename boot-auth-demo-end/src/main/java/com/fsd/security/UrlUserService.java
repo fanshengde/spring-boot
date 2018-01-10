@@ -23,7 +23,9 @@ public class UrlUserService implements UserDetailsService{
 	@Autowired
 	PermissionInfoDao permissionInfoDao;
 	
-	
+	/**
+	 * 重写ｌｏａｄＵｓｅｒＢｙＵｓｅｒＮａｍｅ方法获得ｕｓｅｒｄｅｔａｉｌｓ类型用户
+	 * */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserInfo userInfo = userInfoDao.getByUserName(username);
