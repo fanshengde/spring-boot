@@ -6,6 +6,12 @@ import org.springframework.security.access.ConfigAttribute;
 
 public class UrlConfigAttribute implements ConfigAttribute {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private final HttpServletRequest httpServletRequest;
 
 	public UrlConfigAttribute(HttpServletRequest httpServletRequest) {

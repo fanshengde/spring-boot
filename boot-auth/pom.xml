@@ -59,6 +59,15 @@
 			<artifactId>shiro-core</artifactId>
 			<version>1.2.4</version>
 		</dependency>
+		<dependency>
+			<groupId>net.shibboleth.utilities</groupId>
+			<artifactId>java-support</artifactId>
+			<version>7.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

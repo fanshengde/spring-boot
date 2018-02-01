@@ -9,6 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserInfo implements UserDetails {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private Integer sid;
 	private String cnname;
 	private String username;
