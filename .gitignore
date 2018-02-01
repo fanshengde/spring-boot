@@ -8,3 +8,11 @@
 *.class
 *.class
 asr-msc/bin/com/fsd/record/IatSpeechView.class
+asr-msc/bin/com/fsd/record/IatSpeechView$1.class
+asr-msc/bin/com/fsd/record/IatSpeechView.class
+asr-msc/bin/com/fsd/record/MscTest$1.class
+asr-msc/bin/com/fsd/record/MscTest.class
+asr-msc/bin/com/fsd/record/SpeechRecognition$2.class
+asr-msc/bin/com/fsd/record/SpeechRecognition.class
+asr-msc/bin/com/fsd/util/DrawableUtils.class
+calendar/bin/calendar/CalendarDemo.class
