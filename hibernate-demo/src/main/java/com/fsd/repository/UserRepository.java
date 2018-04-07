@@ -16,8 +16,10 @@ import com.fsd.pojo.UserInfo;
 @Table(name = "t_user")
 @Qualifier("userRepository")
 public interface UserRepository extends CrudRepository<UserInfo, Long>{
+	
 	public UserInfo findOne(Long sid);
 	
 	@Query("select t from UserInfo t where t.username=:username")
 	public UserInfo findUserByName(@Param("username") String username);
+	
 }

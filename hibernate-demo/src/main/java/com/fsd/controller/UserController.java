@@ -19,7 +19,8 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
+	//url
+	//http://localhost:8080//user/getuserById/123
 	@RequestMapping(value="/user/getuserById/{sid}", method = RequestMethod.GET)
 	@ResponseBody
 	public String getUserByid(@PathVariable Long sid) {
@@ -35,6 +36,8 @@ public class UserController {
 		return u.toString();
 	}
 	
+	//url
+	//http://localhost:8080//user/findUserByName/fsd
 	@RequestMapping(value="/user/findUserByName/{username}")  
 	@ResponseBody
 	public UserInfo findUserByName(@PathVariable String username) {
