@@ -3,6 +3,10 @@ package com.fsd.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,5 +76,37 @@ public class CustomerController {
 		List<Customer> entity = customerRepository.findByFirstnameLike(emailAddress);
 		
 		return entity.toString();
+	}
+	
+	@RequestMapping(value="/customer/findByFirstnameAndLastname/{names}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findByFirstnameAndLastname(@PathVariable String names) {
+		System.out.println("hello user 111"+ names);
+		String[] name = names.split(":");
+		List<Customer> entity = customerRepository.findByFirstnameAndLastname(name[0], name[1]);
+		
+		return entity.toString();
+	}
+	
+	
+	@RequestMapping(value="/customer/findByAddressCity/{city}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findByAddressCity(@PathVariable String city) {
+		System.out.println("hello user 111"+ city);
+		List<Customer> entity = customerRepository.findByAddressCity(city);
+		
+		return entity.toString();
+	}
+	
+	@RequestMapping(value="/customer/findByFirstname/{name}", method = RequestMethod.GET)
+	@ResponseBody
+	public String findByFirstname(@PathVariable String name) {
+		System.out.println("hello user 111"+ name);
+		
+		Pageable pageable = new PageRequest(1, 2, Direction.ASC, "firstname");
+		
+		Page<Customer> entity = customerRepository.findByFirstname(name,pageable);
+		
+		return entity.getContent().toString();
 	}
 }
