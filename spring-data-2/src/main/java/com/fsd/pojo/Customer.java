@@ -74,6 +74,6 @@ public class Customer extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return firstname + " " + lastname + " : " + emailAddress.toString();
+		return firstname + " " + lastname + "-" + this.getSid() + " : " + emailAddress.toString();
 	}
 }
