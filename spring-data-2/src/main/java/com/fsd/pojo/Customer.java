@@ -16,7 +16,12 @@ import org.springframework.util.Assert;
 public class Customer extends AbstractEntity {
 	private String firstname;
 	private String lastname;
-
+	
+	/**
+	 * 1. Explicit Remove  明确的删除
+	 * 2. Cascading Remove   级联删除 
+	 * 3. 如果orphanRemoval = true，那么这个操作会删除address对象，如果为false，则会删除他们的关系，将address对user的引用设置为nul
+	 * */
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "customer_id")
 	private Set<Address> address = new HashSet<Address>();
