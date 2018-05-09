@@ -1,20 +1,18 @@
 package com.fsd.controller;
 
+import com.fsd.bean.UserInfo;
+import com.fsd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fsd.bean.UserInfo;
-import com.fsd.service.UserInfoService;
-
 @Controller
 public class LoginController {
 	@Autowired
-	UserInfoService userInfoService;
+	UserService userService;
 
 	@RequestMapping(value = "/login")
 	@ResponseBody
@@ -24,7 +22,7 @@ public class LoginController {
 			return null;
 		}
 		if (loginedUser != null) {
-			return userInfoService.getBySid(loginedUser.getSid());
+			return userService.getById(loginedUser.getSid());
 		}
 		return null;
 	}

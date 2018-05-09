@@ -9,7 +9,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.fsd.security.UrlUserService;
+import com.fsd.config.security.UrlUserService;
 import com.fsd.utils.MD5Util;
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		});
 	}
-	
+
 	@Bean
 	public SessionRegistry getSessionRegistry() {
 		SessionRegistry sessionRegistry = new SessionRegistryImpl();
