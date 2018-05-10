@@ -17,7 +17,8 @@ import java.util.Collection;
  * Created by yangyibo on 17/1/19.
  */
 @Service
-public class UrlAccessDecisionManager implements AccessDecisionManager {
+public class UrlAccessDecisionManager implements AccessDecisionManager { // AccessDecisionManager 负责Spring
+																			// Security访问控制决策
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
@@ -25,7 +26,7 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
 		String url, method;
 		if ("anonymousUser".equals(authentication.getPrincipal()) || matchers("/images/**", request)
 				|| matchers("/js/**", request) || matchers("/css/**", request) || matchers("/fonts/**", request)
-				|| matchers("/", request) || matchers("/index.html", request) || matchers("/favicon.ico", request)
+				|| matchers("/", request) || matchers("/login.html", request) || matchers("/favicon.ico", request)
 				|| matchers("/login", request)) {
 			return;
 		} else {

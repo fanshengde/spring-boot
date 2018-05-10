@@ -1,8 +1,15 @@
 package com.fsd.bean;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +34,14 @@ public class UserInfo extends AbstractEntity implements UserDetails {
 	private String mobilePhone;
 	private String wechatId;
 	private Long loginCount;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id")
+	private RoleInfo role;
+
+	// @OneToMany
+	// private Set<RoleInfo> roles = new HashSet<RoleInfo>();
+
 	@Transient
 	private List<? extends GrantedAuthority> authorities;
 
@@ -141,6 +156,14 @@ public class UserInfo extends AbstractEntity implements UserDetails {
 
 	public void setGrantedAuthorities(List<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
+	}
+
+	public RoleInfo getRole() {
+		return role;
+	}
+
+	public void setRole(RoleInfo role) {
+		this.role = role;
 	}
 
 	public String toString() {

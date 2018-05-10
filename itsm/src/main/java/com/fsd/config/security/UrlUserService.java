@@ -47,41 +47,42 @@ public class UrlUserService implements UserDetailsService {
 	}
 
 	@Override
-    public UserDetails loadUserByUsername(String userName) { //重写loadUserByUsername 方法获得 userdetails 类型用户
+	public UserDetails loadUserByUsername(String userName) { // 重写loadUserByUsername 方法获得 userdetails 类型用户
 
-//        UserInfo user = userInfoRepository.getByUserName(userName);
-        UserInfo user = userInfoRepository.findByUsername(userName);
-        if (user != null) {
-//            List<PermissionInfo> permissions = permissionInfoRepository.getByUserId(user.getSid());
-//        	QCity qCity = QCity.city;
-//        	QCity cityName = new QCity("name");
-//        	List<City> citys = queryFactory.selectFrom(qCity).innerJoin(qCity).on(qCity.name.eq(cityName.name)).fetch();
-        	QRoleInfo roleInfo = QRoleInfo.roleInfo;
-        	QUserInfo userInfo = QUserInfo.userInfo;
-        	QUserRole userRole = QUserRole.userRole;
-        	QPermissionInfo permissionInfo = QPermissionInfo.permissionInfo;
-        	QRolePermission rolePermission = QRolePermission.rolePermission;
-            
-        	List<PermissionInfo> permissions = jpaQueryFactory.select(permissionInfo)
-        			.from(userInfo)
-        			.leftJoin(userRole).on(userInfo.sid.eq(userRole.userInfo.sid))
-        			.leftJoin(roleInfo).on(userRole.roleInfo.sid.eq(roleInfo.sid))
-        			.leftJoin(rolePermission).on(rolePermission.roleInfo.sid.eq(roleInfo.sid))
-        			.leftJoin(permissionInfo).on(permissionInfo.sid.eq(rolePermission.permissionInfo.sid))
-        			.where(userInfo.sid.eq(user.getSid()))
-        			.fetch();
-        	
-            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-            for (PermissionInfo permission : permissions) {
-                if (permission != null && permission.getCnname()!=null) {
-                    GrantedAuthority grantedAuthority = new UrlGrantedAuthority(permission.getPermissionUrl(),permission.getMethod());
-                    grantedAuthorities.add(grantedAuthority);
-                }
-            }
-            user.setGrantedAuthorities(grantedAuthorities);
-            return user;
-        } else {
-            throw new UsernameNotFoundException("admin: " + userName + " do not exist!");
-        }
-    }
+		// UserInfo user = userInfoRepository.getByUserName(userName);
+		UserInfo user = userInfoRepository.findByUsername(userName);
+		if (user != null) {
+			// List<PermissionInfo> permissions =
+			// permissionInfoRepository.getByUserId(user.getSid());
+			// QCity qCity = QCity.city;
+			// QCity cityName = new QCity("name");
+			// List<City> citys =
+			// queryFactory.selectFrom(qCity).innerJoin(qCity).on(qCity.name.eq(cityName.name)).fetch();
+			QRoleInfo roleInfo = QRoleInfo.roleInfo;
+			QUserInfo userInfo = QUserInfo.userInfo;
+			QUserRole userRole = QUserRole.userRole;
+			QPermissionInfo permissionInfo = QPermissionInfo.permissionInfo;
+			QRolePermission rolePermission = QRolePermission.rolePermission;
+
+			List<PermissionInfo> permissions = jpaQueryFactory.select(permissionInfo).from(userInfo).leftJoin(userRole)
+					.on(userInfo.sid.eq(userRole.userInfo.sid)).leftJoin(roleInfo)
+					.on(userRole.roleInfo.sid.eq(roleInfo.sid)).leftJoin(rolePermission)
+					.on(rolePermission.roleInfo.sid.eq(roleInfo.sid)).leftJoin(permissionInfo)
+					.on(permissionInfo.sid.eq(rolePermission.permissionInfo.sid)).where(userInfo.sid.eq(user.getSid()))
+					.fetch();
+
+			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+			for (PermissionInfo permission : permissions) {
+				if (permission != null && permission.getCnname() != null) {
+					GrantedAuthority grantedAuthority = new UrlGrantedAuthority(permission.getPermissionUrl(),
+							permission.getMethod());
+					grantedAuthorities.add(grantedAuthority);
+				}
+			}
+			user.setGrantedAuthorities(grantedAuthorities);
+			return user;
+		} else {
+			throw new UsernameNotFoundException("admin: " + userName + " do not exist!");
+		}
+	}
 }

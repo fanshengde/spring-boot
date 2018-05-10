@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta content="text/html;charset=UTF-8"/>
-<title sec:authentication="name"></title>
+<!-- <title sec:authentication="username"></title> -->
 <link rel="stylesheet" th:href="@{css/bootstrap/bootstrap.css}" />
 <style type="text/css">
 body {
@@ -38,10 +38,11 @@ body {
 
         <p class="bg-primary" th:text="${msg.content}"></p>
 
-        <div sec:authorize="hasRole('ROLE_HOME')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+        <div sec:authorize="hasRole('ROLE_USER')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
             <p class="bg-info" th:text="${msg.etraInfo}"></p>
         </div>
-          <div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+<!--             <p class="bg-info" th:text="${authentication.principal.username}"></p> -->
+          <div sec:authorize="hasRole('ROLE_ADMIN')"> 用户类型为ROLE_ADMIN 显示
               <p class="bg-info">恭喜您,您有 ROLE_ADMIN 权限 </p>
           </div>
 
@@ -51,7 +52,15 @@ body {
       </div>
 
     </div>
-
+	<script th:inline="javascript">
+    var isAdmin = [[${#authorization.expression('hasRole(''ROLE_ADMIN'')')}]];
+    var isHome = [[${#authorization.expression('hasRole(''ROLE_USER'')')}]];
+    var s = [[${#authorization.expression('hasRole(''ROLE_ADMIN'')')}]];
+    var sss = [[${#authorization.expression('hasRole(''ROLE_NULL'')')}]];
+    var sss2 = [[${#authorization.expression('user('admin')')}]];
+    var ss = [[${#authentication.principal}]];
+    var a = '';
+	</script>
 
 </body>
 </html>

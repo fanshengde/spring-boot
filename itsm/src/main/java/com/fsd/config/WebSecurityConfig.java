@@ -44,13 +44,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.permitAll().antMatchers("fonts/**").permitAll().antMatchers("/").permitAll().anyRequest()
 //				.authenticated().and().sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry).and()
 //				.and().logout().invalidateHttpSession(true).clearAuthentication(true).and().httpBasic();
-	        http.authorizeRequests()
-				.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "**/favicon.ico", "/index")
+	        http.authorizeRequests()  //http.authorizeRequests()方法有多个子节点，每个macher按照他们的声明顺序执行。
+				.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "**/favicon.ico", "/index") //我们指定任何用户都可以通过访问的多个URL模式。任何用户都可以访问URL以"/resources/" "/images", 或者 "/index"开头的URL。
 				.permitAll()
-		        .anyRequest().authenticated() //任何请求,登录后可以访问(任何尚未匹配的URL只需要验证用户即可访问)
+				//.antMatchers("admin/**").hasRole("ADMIN") //以 "/admin/" 开头的URL只能由拥有 "ROLE_ADMIN"角色的用户访问。请注意我们使用 hasRole 方法，没有使用 "ROLE_" 前缀.
+				//.antMatchers("/db/**").access("hasRole('ADMIN' and hasRole('DBA')") // 	任何以"/db/" 开头的URL需要用户同时具有 "ROLE_ADMIN" 和 "ROLE_DBA"。和上面一样我们的 hasRole 方法也没有使用 "ROLE_" 前缀.
+		        .anyRequest().authenticated() //任何请求,登录后可以访问(任何尚未匹配的URL只需要验证用户即可访问)  尚未匹配的任何URL要求用户进行身份验证
 		        .and()
 		        .formLogin()
-		        .loginPage("/login")
+		        .loginPage("/login") //指定登陆页路径 如本例中在指定路径为resources/templates/login.html
 		        .failureUrl("/login?error")
 		        .permitAll() //登录页面用户任意访问
 		        .and()
@@ -59,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception { //配置正常的验证。
 		auth.userDetailsService(urlUserService).passwordEncoder(new PasswordEncoder() {
 
 			@Override
