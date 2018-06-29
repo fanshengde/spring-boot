@@ -1,5 +1,6 @@
 package com.fsd.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +13,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class SysUser {
+public class SysUser implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private Integer sid;
@@ -24,9 +30,9 @@ public class SysUser {
 
 	private String password;
 
-	private String salt;
+	private String salt; //加密密码的盐
 
-	private String state;
+	private String state; //用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "userId") }, inverseJoinColumns = {
@@ -90,7 +96,7 @@ public class SysUser {
 	}
 
 	public String getCredentialsSalt() {
-		return this.name + this.salt;
+		return this.username + this.salt;
 	}
 
 }
