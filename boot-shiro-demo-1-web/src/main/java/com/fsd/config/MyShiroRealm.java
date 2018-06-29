@@ -44,7 +44,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 		LOG.info("主要是用来进行身份认证的，也就是说验证用户输入的账号和密码是否正确 MyShiroRealm.doGetAuthenticationInfo()");
 
 		String username = (String) token.getPrincipal();
-		System.out.println(token.getCredentials());
+		LOG.info(token.getCredentials() + "");
 
 		// 通过username从数据库中查找 User对象，如果找到，没找到.
 		// 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
@@ -57,8 +57,12 @@ public class MyShiroRealm extends AuthorizingRealm {
 			return null;
 		}
 
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(),
-				ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+				user, //用户名
+				user.getPassword(), //密码
+				ByteSource.Util.bytes(user.getCredentialsSalt()), //salt=username+salt
+				getName()//realm name
+				);
 
 		return authenticationInfo;
 	}
