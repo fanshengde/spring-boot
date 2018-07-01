@@ -1,15 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+	<meta content="text/html;charset=UTF-8"/>
+	<title>登录页面</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap/bootstrap.css}"/>
+	<link rel="stylesheet" th:href="@{css/aw/login.css}"/>
+	<style type="text/css">
+	    body {
+	  padding-top: 50px;
+	}
+	.starter-template {
+	  padding: 40px 15px;
+	  text-align: center;
+	}
+	</style>
 </head>
 <body>
-错误信息：<h4 th:text="${msg}"></h4>
-<form action="" method="post">
-    <p>账号：<input type="text" name="username" value="admin"/></p>
-    <p>密码：<input type="text" name="password" value="123456"/></p>
-    <p><input type="submit" value="登录"/></p>
-</form>
+
+     <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+     <div class="container">
+
+      <div class="starter-template">
+       <p th:if="${param.logout}" class="bg-warning">已成功注销</p><!-- 1 -->
+            <p th:if="${param.error}" class="bg-danger">有错误，请重试</p> <!-- 2 -->
+            <div class="logo-center">
+            	<img src="img/aw/aw_log.png"></img>
+            </div>
+            <div class="title">
+            	<h2>运维管理系统</h2>
+            </div>
+            <form name="form" th:action="@{/login}" action="/login" method="POST"> <!-- 3 -->
+                <div class="form-group">
+<!--                     <label for="username">账号</label> -->
+                    <input type="text" class="form-control input-text" name="username" value="" placeholder="账号" />
+                </div>
+                <div class="form-group">
+<!--                     <label for="password">密码</label> -->
+                    <input type="password" class="form-control input-text" name="password" placeholder="密码" />
+                </div>
+                 <div class="form-group">
+	                <input type="submit" id="login" value="登陆" class="btn btn-primary input-submit" />
+                 </div>
+            </form>
+      </div>
+    </div>  
 </body>
 </html>
