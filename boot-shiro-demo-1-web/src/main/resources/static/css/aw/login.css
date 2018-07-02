@@ -1,0 +1,36 @@
+body {
+	color: #F8F8F8;
+	background-color: rgba(45, 101, 203, 89);
+	background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(119, 157, 207
+		, .8) 30%, rgba(174, 180, 186, .8) 76%, rgba(199, 175, 156, .8));
+	background-attachment: fixed, fixed;
+	overflow-y: scroll;
+}
+
+.title h2 {
+	line-height: 40px;
+	font-size: 30px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.logo-center {
+	width: 150px;
+	height: 150px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.input-text {
+	font-size: 15px !important;
+	line-height: 34px !important;
+	height: 34px !important;
+	width: 300px;
+}
+
+.input-submit {
+	font-size: 14px;
+	padding: 8px 16px;
+	line-height: 1.5;
+	width: 310px !important
+}

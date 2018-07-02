@@ -27,7 +27,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login1(HttpServletRequest request, Map<String, Object> map) {
+	public String login(HttpServletRequest request, Map<String, Object> map) {
 		LOG.info("HomeController.login()");
 
 		String exception = (String) request.getAttribute("shiroLoginFailure");

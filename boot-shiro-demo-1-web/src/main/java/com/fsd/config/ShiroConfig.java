@@ -31,7 +31,12 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
 		// 配置不会被拦截的链接 顺序判断
-		filterChainDefinitionMap.put("/static/**", "anon");
+//		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/static/css/aw/**", "anon");
+		filterChainDefinitionMap.put("/static/css/bootstrap/**", "anon");
+		filterChainDefinitionMap.put("/static/img/**", "anon");
+		filterChainDefinitionMap.put("/static/img/aw/**", "anon");
+		filterChainDefinitionMap.put("/static/js/**", "anon");
 
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
@@ -98,11 +103,11 @@ public class ShiroConfig {
 	public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
 		SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
 		Properties mappings = new Properties();
-		mappings.setProperty("DatabaseException", "databaseError");
+		mappings.setProperty("DatabaseException", "databaseError"); //数据库异常处理
 		mappings.setProperty("UnauthorizedException", "403");
-		resolver.setExceptionMappings(mappings);
-		resolver.setDefaultErrorView("error");
-		resolver.setExceptionAttribute("ex");
+		resolver.setExceptionMappings(mappings); // None by default
+		resolver.setDefaultErrorView("error"); // No default
+		resolver.setExceptionAttribute("ex"); // Default is "exception"
 		return resolver;
 	}
 }
