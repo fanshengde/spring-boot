@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add</title>
+<meta content="text/html;charset=UTF-8" />
+<title>Add</title>
 </head>
 <body>
-<h3>用户添加界面</h3>
+	<form action="#" th:action="@{userAdd}" th:object="${sysUser}"
+		method="post">
+		<ul>
+			<li>用户名：<input type="text" th:field="*{username}"></input>
+			</li>
+			<li>姓名：<input type="text" th:field="*{name}"></input>
+			</li>
+			<li>密码：<input type="password" th:field="*{password}"></input>
+			</li>
+			<li>状态： <input type="text" th:field="*{state}" th:value="0"></input>
+			</li>
+			<li><input type="submit" value="添加用户"></input></li>
+		</ul>
+	</form>
 </body>
 </html>

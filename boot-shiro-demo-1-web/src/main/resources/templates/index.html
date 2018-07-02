@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>index</title>
+<meta charset="UTF-8">
+<title>index</title>
+<style>
+ul.menu {
+	height: 58px;
+	background: #1a1a1a;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	list-style: none;
+}
+
+ul.menu li {
+	display: inline-block;
+	font-size: 14px;
+	line-height: 58px;
+	color: #fff;
+	cursor: pointer;
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
-	<h1>index</h1>
-	
-	<form th:action="@{/logout}" method="post">
-		<input type="submit" value="注销"/>
-	</form>
+	<!-- 	<h1>index</h1> -->
+
+	<!-- 	<form th:action="@{/logout}" method="post"> -->
+	<!-- 		<input type="submit" value="注销"/> -->
+	<!-- 	</form> -->
+	<header>
+		<ul class="menu">
+			<li class="menuHome"><a href="/index">首页</a></li>
+			<li class="menuUserList"><a href="/user/userList">用户列表</a></li>
+			<li class="menuUserAdd"><a href="/user/userAdd">增加用户</a></li>
+			<li class="menuUserDel"><a href="/user/userDel">删除用户</a></li>
+			<li class="menuUserDel"><a href="/logout">注销用户</a></li>
+		</ul>
+	</header>
+
 </body>
 </html>
