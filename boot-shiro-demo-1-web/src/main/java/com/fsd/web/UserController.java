@@ -1,8 +1,14 @@
 package com.fsd.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
 
+import org.apache.shiro.authc.SaltedAuthenticationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.SimpleByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,14 +46,19 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/userAdd", method = RequestMethod.GET)
 	@RequiresPermissions("userInfo:add") // 权限管理;
-	public String userInfoAdd(@ModelAttribute(value="sysUser") SysUser sysUser, Model model) {
+	public String userInfoIndex(@ModelAttribute(value="sysUser") SysUser sysUser, Model model) {
 		model.addAttribute("sysUser", sysUser);
 		return "userInfoAdd";
 	}
 	
 	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
 	@RequiresPermissions("userInfo:add") // 权限管理;
-	public String userInfoAdd(@ModelAttribute SysUser sysUser) {
+	public String userInfoAdd(@ModelAttribute(value="sysUser") SysUser sysUser, Model model) {
+		String salt =new SecureRandomNumberGenerator().nextBytes().toHex();
+		SimpleHash pw = new SimpleHash("md5", sysUser.getPassword(), sysUser.getUsername()+salt, 2);
+		
+		sysUser.setPassword(pw.toString());
+		sysUser.setSalt(salt);
 		sysUserRepository.save(sysUser);
 		return "userInfoAdd";
 	}
