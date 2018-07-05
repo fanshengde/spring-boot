@@ -5,10 +5,36 @@
     <title>UserInfo</title>
 </head>
 <body>
-	<tr th:each="sysUser : ${sysUsers}">
-		<td th:text="${sysUser.username}"></td>
-		<td th:text="${sysUser.name}"></td>
-		<td th:text="${sysUser.state}"></td>
-	</tr>
+	<header>
+		<ul class="menu">
+			<li class="menuHome"><a href="/index">首页</a></li>
+		</ul>
+	</header>
+	<table border = "1" cellspacing = "0">
+		<tr>
+			<td>用户名</td>
+			<td>姓名</td>
+			<td>状态</td>
+			<td>角色</td>
+			<td>权限</td>
+		</tr>
+		<tr th:each="sysUser : ${sysUsers}">
+			<td th:text="${sysUser.username}"></td>
+			<td th:text="${sysUser.name}"></td>
+			<td th:text="${sysUser.state}"></td>
+			<td th:each="role : ${sysUser.roleList}">
+				<p th:text = "${role.description}"/>
+			</td>
+			<td th:each="role : ${sysUser.roleList}">
+				<ul th:each="permission : ${role.permissions}">
+					<li>
+						<p th:text = "${permission.name}"/>
+						<p th:text = "${permission.permission}"/>
+						<p th:text = "${permission.url}"/> 
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>
