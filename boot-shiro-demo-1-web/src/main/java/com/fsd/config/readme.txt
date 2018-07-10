@@ -14,8 +14,24 @@
 
 html页面权限颗粒话功能：
 https://blog.csdn.net/qq_26562641/article/details/79298069
+
+element下载地址
+https://unpkg.com/element-ui@2.4.3/
+
+vue + element ui 实例
+https://github.com/lin-xin/vue-manage-system
+
+http://blog.gdfengshuo.com/example/work/#/dashboard
 	
-	
-	
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta>
+		<!-- 
+			width - viewport的宽度 height - viewport的高度
+			initial-scale - 初始的缩放比例
+			minimum-scale - 允许用户缩放到的最小比例
+			maximum-scale - 允许用户缩放到的最大比例
+			user-scalable - 用户是否可以手动缩放
+		 -->	
 	
 	
