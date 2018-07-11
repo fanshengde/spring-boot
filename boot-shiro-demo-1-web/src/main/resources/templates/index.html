@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 <meta charset="UTF-8">
 <title>index</title>
+<script type="text/javascript" th:src="@{js/vue.js}"></script>
 <style>
 ul.menu {
 	height: 58px;
@@ -31,12 +33,15 @@ ul.menu li {
 	<header>
 		<ul class="menu">
 			<li class="menuHome"><a href="/index">首页</a></li>
-			<li class="menuUserList"><a href="user/userList">用户列表</a></li>
+			<li class="menuUserInfo"><a href="user/userList">用户列表</a></li>
 			<li class="menuUserAdd"><a href="user/userAdd">增加用户</a></li>
 			<li class="menuUserDel"><a href="user/userDel">删除用户</a></li>
 			<li class="menuUserDel"><a href="logout">注销用户</a></li>
 		</ul>
 	</header>
+<!-- 	<span shiro:authenticated="true"> -->
+<!-- 		<span>欢迎您：<span th:text="${msg}"></span></span> -->
+<!-- 	</span> -->
 
 </body>
 </html>
