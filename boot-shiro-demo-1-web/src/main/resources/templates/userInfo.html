@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta content="text/html;charset=UTF-8" />
-    <title>UserInfo</title>
+<meta content="text/html;charset=UTF-8" />
+<title>UserInfo</title>
+<script type="text/javascript" th:src="@{../js/jquery-3.3.1.js}"></script>
 </head>
 <body>
 	<header>
@@ -10,31 +11,67 @@
 			<li class="menuHome"><a href="../index">首页</a></li>
 		</ul>
 	</header>
-	<table border = "1" cellspacing = "0">
+	<table border="1" cellspacing="0">
 		<tr>
 			<td>用户名</td>
 			<td>姓名</td>
 			<td>状态</td>
 			<td>角色</td>
 			<td>权限</td>
+			<td>操作</td>
 		</tr>
 		<tr th:each="sysUser : ${sysUsers}">
 			<td th:text="${sysUser.username}"></td>
 			<td th:text="${sysUser.name}"></td>
 			<td th:text="${sysUser.state}"></td>
+			<td th:if="${sysUser.roleList.size() <= 0}"></td>
 			<td th:each="role : ${sysUser.roleList}">
-				<p th:text = "${role.description}"/>
+				<p th:text="${role.description}" />
 			</td>
+
+			<td th:if="${sysUser.roleList.size() <= 0}"></td>
 			<td th:each="role : ${sysUser.roleList}">
 				<ul th:each="permission : ${role.permissions}">
 					<li>
-						<p th:text = "${permission.name}"/>
-						<p th:text = "${permission.permission}"/>
-						<p th:text = "${permission.url}"/> 
+						<p th:text="${permission.name}" />
+						<p th:text="${permission.permission}" />
+						<p th:text="${permission.url}" />
 					</li>
 				</ul>
 			</td>
+			<td>
+				<button class="but-del" th:index="${sysUser.username}">删除</button>
+				
+				<button class="but-modify" th:index="${sysUser.username}">修改</button>
+			</td>
 		</tr>
 	</table>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".but-modify").click(function() {
+				alert("modify");
+				
+			});
+			$(".but-del").click(function() {
+				$.ajax({
+					contentType : "application/json",
+					dataType : "JSON",
+					type: "POST",
+					url : "userDel",
+					async : true,
+					data : {
+						  "username" : $(this).attr("index"),
+					},
+					success : function(){
+						alert("success");
+					},
+					error : function(){
+						alert("error");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

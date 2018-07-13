@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
+
 @Configuration
 public class ShiroConfig {
 	static final Logger LOG = LoggerFactory.getLogger(ShiroConfig.class);
@@ -110,4 +111,9 @@ public class ShiroConfig {
 		resolver.setExceptionAttribute("ex"); // Default is "exception"
 		return resolver;
 	}
+	
+//	@Bean
+//	public ShiroDialect shiroDialect() {
+//		return new ShiroDialect();
+//	}
 }

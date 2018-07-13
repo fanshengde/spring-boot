@@ -1,0 +1,6 @@
+通过Ajax和SpringBoot交互的示例
+	https://blog.csdn.net/oppo5630/article/details/52093898
+迷你MVVM框架 avalonjs 入门教程
+
+SpringMVC @ResponseBody 415错误处理
+https://blog.csdn.net/yixiaoping/article/details/45281721
