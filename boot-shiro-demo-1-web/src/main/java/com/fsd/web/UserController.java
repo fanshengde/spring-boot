@@ -1,6 +1,6 @@
 package com.fsd.web;
 
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -8,25 +8,19 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsd.entity.SysUser;
 import com.fsd.entity.repository.SysUserRepository;
-import com.fsd.web.util.ResponseCode;
-import com.fsd.web.util.ResponseEntity;
+import com.fsd.web.util.MyResponseEntity;
 
 @Controller
 @RequestMapping("/user")
@@ -90,15 +84,19 @@ public class UserController {
 
 	@RequestMapping(value = "/userDel", method = RequestMethod.POST)
 	@ResponseBody
-//	@ResponseStatus(value = HttpStatus.OK)
-	public String userDel1(@RequestBody String user) throws JsonProcessingException {
-		LOG.info("dddddddddddddddddddddddddddddddd: " + user);
-		ResponseEntity entity = new ResponseEntity(ResponseCode.SUCCESS);
+	public ResponseEntity<?> userDel1(@RequestBody SysUser user, Errors errors) {
+
+		MyResponseEntity result = new MyResponseEntity();
+
+		if (errors.hasErrors()) {
+			String msg = errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
+					.collect(Collectors.joining(","));
+			result.setMsg(msg);
+			return ResponseEntity.badRequest().body(result);
+		}
 		
-		String json1 = JSONObject.toJSONString(entity);
-		System.out.println("---------------");
-		System.out.println(json1);
-		System.out.println("---------------");
-		return json1;
+		sysUserRepository.delete(user);
+		
+		return ResponseEntity.ok(result);
 	}
 }

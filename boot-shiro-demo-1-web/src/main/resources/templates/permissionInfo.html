@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta content="text/html;charset=UTF-8" />
+<title>UserInfo</title>
+<script type="text/javascript" th:src="@{../js/jquery-3.3.1.js}"></script>
+</head>
+<body>
+	<header>
+		<ul class="menu">
+			<li class="menuHome"><a href="../index">首页</a></li>
+		</ul>
+	</header>
+	<table border="1" cellspacing="0">
+		<tr>
+			<td>权限名</td>
+			<td>资源类型</td>
+			<td>url</td>
+			<td>权限</td>
+			<td>父节点</td>
+			<td>父节组</td>
+			<td>是否有效</td>
+			<td>角色</td>
+			<td>操作</td>
+			
+		</tr>
+		<tr th:each="sysPermission : ${sysPermissions}">
+			<td th:text="${sysPermission.name}"></td>
+			<td th:text="${sysPermission.resourceType}"></td>
+			<td th:text="${sysPermission.url}"></td>
+			<td th:text="${sysPermission.permission}"></td>
+			<td th:text="${sysPermission.parentId}"></td>
+			<td th:text="${sysPermission.parentIds}"></td>
+			<td th:text="${sysPermission.available}"></td>
+			
+			
+			
+			<td>
+				<ul th:each="role : ${sysPermission.roles}">
+					<li th:text="${role.role}"></li>
+				</ul>
+			</td>
+			
+			<td>
+				<button class="but-del" th:index="${sysPermission.permission}">删除</button>
+				<button class="but-modify" th:index="${sysPermission.permission}">修改</button>
+			</td>
+		</tr>
+	</table>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".but-modify").click(function() {
+				alert("modify");
+				
+			});
+			$(".but-del").click(function() {
+				$.ajax({
+					type: "POST",
+					url : "userDel",
+					data : $(".but-modify").attr("index"),
+					success : function(){
+						alert("success");
+					},
+					error : function(){
+						alert("error");
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

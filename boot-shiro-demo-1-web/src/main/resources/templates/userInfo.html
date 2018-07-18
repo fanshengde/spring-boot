@@ -40,7 +40,7 @@
 				</ul>
 			</td>
 			<td>
-				<button class="but-del" th:index="${sysUser.username}">删除</button>
+				<button class="but-del" th:index="${sysUser.sid}">删除</button>
 				
 				<button class="but-modify" th:index="${sysUser.username}">修改</button>
 			</td>
@@ -54,20 +54,24 @@
 				
 			});
 			$(".but-del").click(function() {
+				var entityId = $(this).attr("index");
+				var entity = {};
+				entity["sid"] = entityId;
+				
 				$.ajax({
-					contentType : "application/json",
-					dataType : "JSON",
-					type: "POST",
-					url : "userDel",
+					type: 'post',
+					contentType: "application/json",
+					dataType: 'json',
+					url: "userDel",
+					data: JSON.stringify(entity),
+					cache: false,
+					timeout: 600000,
 					async : true,
-					data : {
-						  "username" : $(this).attr("index"),
+					success : function(data){
+						alert("success" + data);
 					},
-					success : function(){
-						alert("success");
-					},
-					error : function(){
-						alert("error");
+					error : function(data){
+						alert("error" + data);
 					}
 				});
 			});
