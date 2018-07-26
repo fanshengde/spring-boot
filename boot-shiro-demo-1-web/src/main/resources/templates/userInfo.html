@@ -32,6 +32,7 @@
 
 <script type="text/javascript" th:src="@{../js/modernizr.js}"></script>
 <script type="text/javascript" th:src="@{../js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{../js/bootstrap.js}"></script>
 
 </head>
 <body class="dashboard-page">
@@ -147,9 +148,9 @@
 									</ul>
 								</td>
 								<td>
-									<button id="but-del" class="btn btn-danger" th:index="${sysUser.sid}">删除</button>
+									<button id="but-del" class="but-del but-del btn btn-danger" th:index="${sysUser.sid}">删除</button>
 									
-									<button id="but-modify" class="btn btn-warning" th:index="${sysUser.sid}">修改</button>
+									<button id="but-modify" class="but-modify btn btn-warning" th:index="${sysUser.sid}">修改</button>
 								</td>
 								
 							</tr>
@@ -165,12 +166,30 @@
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("#but-modify").click(function() {
-					alert("modify");
+				$(".but-modify").click(function() {
+					var entityId = $(this).attr("index");
+					var entity = {};
+					entity["sid"] = entityId;
+					$('#modal fade').modal('show');
+// 					$.ajax({
+// 						type: 'post',
+// 						contentType: "application/json",
+// 						dataType: 'json',
+// 						url: "userDel",
+// 						data: JSON.stringify(entity),
+// 						cache: false,
+// 						timeout: 600000,
+// 						async : true,
+// 						success : function(data){
+// 							$('#modal fade').modal('show')
+// 						},
+// 						error : function(data){
+// 							$('#modal fade').modal('show')
+// 						}
+// 					});
 					
 				});
-				$("#but-del").click(function() {
-// 					alert("delete");
+				$(".but-del").click(function() {
 					var entityId = $(this).attr("index");
 					var entity = {};
 					entity["sid"] = entityId;
@@ -185,11 +204,10 @@
 						timeout: 600000,
 						async : true,
 						success : function(data){
-							alert("success" + data);
-							window.reload();
+// 							$('#modal fade').modal('show')
 						},
 						error : function(data){
-							alert("error" + data);
+// 							$('#modal fade').modal('show')
 						}
 					});
 				});
