@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fsd.entity.SysUser;
 import com.fsd.entity.repository.SysUserRepository;
-import com.fsd.web.util.MyResponseEntity;
+import com.fsd.web.utils.MyResponseEntity;
 
 @Controller
 @RequestMapping("/user")

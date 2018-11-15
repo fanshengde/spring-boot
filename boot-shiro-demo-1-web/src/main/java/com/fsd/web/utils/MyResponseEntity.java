@@ -1,4 +1,4 @@
-package com.fsd.web.util;
+package com.fsd.web.utils;
 
 public class MyResponseEntity {
 	private int code;

@@ -6,4 +6,5 @@ import com.fsd.entity.SysUser;
 
 public interface SysUserRepository extends PagingAndSortingRepository<SysUser, Long> {
 	public SysUser findByUsername(String username);
+	public SysUser findByUsernameAndPassword(String username, String password);
 }

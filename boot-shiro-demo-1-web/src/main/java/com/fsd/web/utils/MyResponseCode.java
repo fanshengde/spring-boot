@@ -1,12 +1,17 @@
-package com.fsd.web.util;
+package com.fsd.web.utils;
 
-public enum MyResponseCode {
-	SUCCESS(200, "请求成功"), WARN(500, "请求失败");
+public class MyResponseCode {
+//	SUCCESS(200, "请求成功"), WARN(500, "请求失败");
 
 	private int code;
 	private String msg;
 	
+	MyResponseCode(int code) {
+		this.code = code;
+	}
+	
 	MyResponseCode(int code, String msg) {
+		this(code);
 		this.msg = msg;
 	}
 
